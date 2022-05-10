@@ -3,6 +3,7 @@ from discord.ext import commands, tasks
 
 from cogs import savefile
 
+import asyncio
 from datetime import datetime
 import json
 import os
@@ -55,10 +56,19 @@ class Administrative(commands.Cog):
                     yield presence
 
         self.change_presence_task.start(presences())
+        self.restart_after.start(seconds=86400)
 
     @commands.Cog.listener(name="on_ready")
     async def on_ready(self):
         print(f"[READY] {self.bot.user} connected to Discord.")
+
+    @tasks.loop(count=1)
+    async def restart_after(self, seconds):
+        await asyncio.sleep(seconds)
+        for cog in list(self.bot.cogs.keys()):
+            self.bot.unload_extension(f"cogs.{cog.lower()}")
+        print(f"[AUTO] [RESTART] Automatic Restart after {seconds} seconds")
+        os.execv(sys.executable, ["python"] + sys.argv)
 
     @tasks.loop(seconds=10)
     async def change_presence_task(self, presences):
