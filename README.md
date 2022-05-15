@@ -1,8 +1,8 @@
-# cerealbot
+# Cerealbot
 cerealbot is an open source Discord Bot created by NotYou#2907.
 
 
-**HOST IT YOURSELF**
+## SELF HOSTING
 *This little guide might partly only work for Windows user*
 
 First decide where you want the folder with the source to be on your local computer.
