@@ -2,25 +2,8 @@ import discord
 from discord.ext import commands
 
 import asyncio
-from contextlib import redirect_stdout
-from io import StringIO
-import os
-import sys
 import validators
 import youtube_dl
-
-
-class NullIO(StringIO):
-    def write(self, _):
-        pass
-
-
-def silent(fn):
-    def silent_fn(*args, **kwargs):
-        with redirect_stdout(NullIO()):
-            return fn(*args, **kwargs)
-
-    return silent_fn
 
 
 youtube_dl.utils.bug_reports_message = lambda: ""
